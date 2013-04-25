@@ -1,0 +1,84 @@
+<!doctype html>
+<html ng-app="todomvc">
+  <head>
+    <!-- Bootstrap Framework -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+	
+	<link rel="stylesheet" href="styles.css">
+	
+	<!-- Angular Framework -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-resource.min.js"></script>
+    <script src="app.js"></script>
+	<script src="controllers/todoCtrl.js"></script>
+	<script src="services/mongolabStorage.js"></script>
+	
+  </head>
+  <body>
+	<div id="todo">
+	    <h2>Todo</h2>
+	    <div ng-controller="TodoCtrl">
+	    
+	    	<div class="well">
+				<div>
+					{{remaining()}} of {{todos.length}} remaining
+					[<a href="" ng-click="archive()">archive</a>]
+				</div>
+				
+				<hr />
+			
+				<div class="btn-group">
+					<button class="btn" ng-class="{'btn-primary': location.path() == '/'} " onclick="location.href='#/'">All</button>
+					<button class="btn" ng-class="{'btn-primary': location.path() == '/active'}" onclick="location.href='#/active'">Active</button>
+					<button class="btn" ng-class="{'btn-primary': location.path() == '/completed'}" onclick="location.href='#/completed'">Completed</button>
+				</div>
+				
+				<br /><br />
+				
+				<div class="btn-group">
+					<button class="btn" ng-class="{'btn-primary': location.path() == '/'} " onclick="location.href='#/'">All</button>
+					<button class="btn" ng-class="{'btn-primary': location.path() == '/high'}" onclick="location.href='#/high'">High</button>
+					<button class="btn" ng-class="{'btn-primary': location.path() == '/normal'}" onclick="location.href='#/normal'">Normal</button>
+					<button class="btn" ng-class="{'btn-primary': location.path() == '/low'}" onclick="location.href='#/low'">Low</button>
+				</div>
+				
+				<hr />
+				
+				<div>
+					<input type="text" ng-model="searchFilter" placeholder="Search" />
+				</div>
+			</div>
+			
+			<div class="well">
+				<ul>
+					<li ng-repeat="todo in todos| filter:statusFilter | filter:priorityFilter | filter:searchFilter">
+						<div class="btn-group">
+						  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							Priority
+							<span class="caret"></span>
+						  </a>
+						  <ul class="dropdown-menu">
+							<li><a href="" ng-click="setPriority(todo,1)">High</a></li>
+							<li><a href="" ng-click="setPriority(todo,2)">Normal</a></li>
+							<li><a href="" ng-click="setPriority(todo,3)">Low</a></li>
+							<li><a href="" ng-click="setPriority(todo,9)">No priority</a></li>
+						  </ul>
+						</div>
+						<input type="checkbox" ng-model="todo.done" ng-click="store(todo)" />
+						<span class="done-{{todo.done}} badge" ng-class="priorityNgClass(todo.priority)" ng-click="editTodo(todo)">{{todo.text}}</span>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="well">
+				<form ng-submit="saveTodo()">
+					<input type="text" ng-model="todo.text" size="30" placehoder="add new todo here" />
+					<input type="submit" value="{{action_name}}" class="btn" />
+				</form>
+			</div>
+	    </div>
+	 </div>
+  </body>
+</html>

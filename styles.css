@@ -1,0 +1,22 @@
+input[type=text]{
+  margin-bottom:0;	
+}
+
+#todo{
+	margin:0 auto;
+	width:350px;
+}
+
+#todo ul{
+	margin-left:0;
+}
+
+#todo li{
+	list-style-type:none;	
+	padding:5px 0;	
+}
+
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
